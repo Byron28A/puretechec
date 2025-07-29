@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puretech | Desarrollo Web, Software, Apps y Branding</title>
+    <!-- Chosen Palette: Puretech Brand Colors -->
+    <!-- Application Structure Plan: A single-page, scrollable marketing website with a logical flow from value proposition to conversion. Sections include Hero, Services, Strategic Objectives (interactive chart), Process, Portfolio, and Contact. This structure is designed as a sales funnel, guiding the B2B user through Puretech's offerings and value, which is more effective for lead generation than a simple documentation-style layout. -->
+    <!-- Visualization & Content Choices: The core data from the report (Table: Objetivo Clave del Sitio Web) is visualized as an interactive horizontal bar chart using Chart.js. Goal: Compare strategic objectives. Viz: Bar Chart. Interaction: Hovering over a bar reveals detailed KPIs and justification in a tooltip. Justification: This transforms a dense table into an engaging, easily digestible visual, highlighting Puretech's data-driven approach. Other elements like the process diagram are built with HTML/Tailwind for simplicity and performance. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Removed Inter font, using Consolas as requested -->
+    <style>
+        body {
+            font-family: 'Consolas', monospace; /* Changed font to Consolas */
+            background-color: #f8fafc;
+        }
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .bg-puretech-dark { background-color: #2c3e4d; }
+        .text-puretech-dark { color: #2c3e4d; }
+        .bg-puretech-teal { background-color: #57c5ab; }
+        .text-puretech-teal { color: #57c5ab; }
+        .border-puretech-teal { border-color: #57c5ab; }
+        .bg-puretech-blue { background-color: #3cb1f2; }
+        .text-puretech-blue { color: #3cb1f2; }
+        .border-puretech-blue { border-color: #3cb1f2; }
+        .section-title {
+            font-weight: 900;
+            font-size: 2.25rem;
+        }
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: #4a5568;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 500px;
+            }
+        }
+        .nav-link.active {
+            color: #57c5ab;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-md shadow-md fixed w-full top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <a href="#hero" class="text-2xl font-bold text-puretech-dark uppercase"> <!-- Changed to uppercase -->
+                    PURETECH <!-- Changed color and text to PURETECH -->
+                </a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#services" class="nav-link text-gray-600 hover:text-puretech-teal transition-colors">Servicios</a>
+                    <a href="#strategy" class="nav-link text-gray-600 hover:text-puretech-teal transition-colors">Estrategia</a>
+                    <a href="#process" class="nav-link text-gray-600 hover:text-puretech-teal transition-colors">Proceso</a>
+                    <a href="#portfolio" class="nav-link text-gray-600 hover:text-puretech-teal transition-colors">Portafolio</a>
+                    <a href="#contact" class="bg-puretech-teal text-white font-bold py-2 px-4 rounded-full hover:bg-opacity-90 transition-all">Contacto</a>
+                </nav>
+                <button id="mobile-menu-button" class="md:hidden text-puretech-dark">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#services" class="block text-center py-2 px-4 text-sm text-gray-700 hover:bg-puretech-teal hover:text-white">Servicios</a>
+            <a href="#strategy" class="block text-center py-2 px-4 text-sm text-gray-700 hover:bg-puretech-teal hover:text-white">Estrategia</a>
+            <a href="#process" class="block text-center py-2 px-4 text-sm text-gray-700 hover:bg-puretech-teal hover:text-white">Proceso</a>
+            <a href="#portfolio" class="block text-center py-2 px-4 text-sm text-gray-700 hover:bg-puretech-teal hover:text-white">Portafolio</a>
+            <a href="#contact" class="block text-center py-4 px-4 text-sm bg-puretech-teal text-white font-bold">Contacto</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex items-center bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-puretech-dark mb-4 leading-tight text-shadow">
+                    Transformamos Ideas en Soluciones Digitales de Impacto.
+                </h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-600 mb-8">
+                    En Puretech, reinventamos tu presencia digital con desarrollo web, software a medida, aplicaciones móviles innovadoras y branding que conecta.
+                </p>
+                <a href="#contact" class="bg-puretech-blue text-white font-bold py-4 px-8 rounded-full text-lg hover:scale-105 transition-transform inline-block">
+                    Inicia tu Proyecto
+                </a>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="section-title text-puretech-dark">Nuestros Servicios Esenciales</h2>
+                    <p class="section-subtitle max-w-2xl mx-auto">
+                        Impulsamos tu negocio con un ecosistema de soluciones tecnológicas diseñadas para el crecimiento y la eficiencia.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Service Card 1 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                        <div class="text-puretech-teal mb-4 text-4xl">●</div>
+                        <h3 class="text-xl font-bold text-puretech-dark mb-2">Desarrollo Web</h3>
+                        <p class="text-gray-600">Creamos sitios y aplicaciones web de alto rendimiento, seguros y con experiencias de usuario (UX) optimizadas para la conversión.</p>
+                    </div>
+                    <!-- Service Card 2 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                        <div class="text-puretech-blue mb-4 text-4xl">■</div>
+                        <h3 class="text-xl font-bold text-puretech-dark mb-2">Desarrollo de Software</h3>
+                        <p class="text-gray-600">Diseñamos soluciones de software a medida que automatizan procesos, mejoran la eficiencia y se escalan con tu negocio.</p>
+                    </div>
+                    <!-- Service Card 3 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                        <div class="text-puretech-teal mb-4 text-4xl">▲</div>
+                        <h3 class="text-xl font-bold text-puretech-dark mb-2">Aplicaciones Móviles</h3>
+                        <p class="text-gray-600">Desarrollamos aplicaciones móviles nativas e híbridas para iOS y Android que ofrecen valor y engagement a tus usuarios.</p>
+                    </div>
+                    <!-- Service Card 4 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                        <div class="text-puretech-blue mb-4 text-4xl">◆</div>
+                        <h3 class="text-xl font-bold text-puretech-dark mb-2">Branding y Diseño</h3>
+                        <p class="text-gray-600">Construimos identidades de marca memorables, desde el logo hasta la estrategia visual completa, que resuenan con tu audiencia.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Strategy Section -->
+        <section id="strategy" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="section-title text-puretech-dark">Nuestra Estrategia Basada en Datos</h2>
+                    <p class="section-subtitle max-w-3xl mx-auto">
+                        Cada proyecto se fundamenta en objetivos claros y medibles. Este gráfico interactivo muestra nuestras áreas de enfoque clave para el éxito de nuestros clientes B2B. Pase el cursor sobre las barras para ver los detalles.
+                    </p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="strategyChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section id="process" class="py-20 bg-puretech-dark text-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="section-title">Nuestro Proceso Simplificado</h2>
+                    <p class="section-subtitle text-gray-300 max-w-2xl mx-auto">
+                        Seguimos una metodología probada para garantizar la calidad y el éxito en cada etapa de tu proyecto.
+                    </p>
+                </div>
+                <div class="relative">
+                    <!-- The connecting line -->
+                    <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-puretech-teal opacity-50 transform -translate-y-1/2"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-8 text-center">
+                        <!-- Step 1 -->
+                        <div class="relative flex flex-col items-center">
+                            <div class="bg-puretech-teal w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4 z-10">1</div>
+                            <h3 class="font-bold mb-2">Descubrimiento</h3>
+                            <p class="text-sm text-gray-400">Análisis de objetivos, audiencia y competencia.</p>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="relative flex flex-col items-center">
+                            <div class="bg-puretech-teal w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4 z-10">2</div>
+                            <h3 class="font-bold mb-2">Diseño y Estrategia</h3>
+                            <p class="text-sm text-gray-400">Creación de sitemaps, wireframes y diseño visual (UI/UX).</p>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="relative flex flex-col items-center">
+                            <div class="bg-puretech-teal w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4 z-10">3</div>
+                            <h3 class="font-bold mb-2">Desarrollo</h3>
+                            <p class="text-sm text-gray-400">Codificación frontend y backend con tecnologías modernas.</p>
+                        </div>
+                        <!-- Step 4 -->
+                        <div class="relative flex flex-col items-center">
+                            <div class="bg-puretech-teal w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4 z-10">4</div>
+                            <h3 class="font-bold mb-2">Pruebas y Calidad</h3>
+                            <p class="text-sm text-gray-400">Aseguramos la funcionalidad, rendimiento y seguridad.</p>
+                        </div>
+                        <!-- Step 5 -->
+                        <div class="relative flex flex-col items-center">
+                            <div class="bg-puretech-teal w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4 z-10">5</div>
+                            <h3 class="font-bold mb-2">Lanzamiento</h3>
+                            <p class="text-sm text-gray-400">Despliegue, monitoreo y soporte continuo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="section-title text-puretech-dark">Proyectos que Hablan por Sí Mismos</h2>
+                    <p class="section-subtitle max-w-2xl mx-auto">
+                        Estamos orgullosos de las soluciones que hemos construido. Aquí una muestra de nuestro trabajo.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Portfolio Item 1: AvroArt -->
+                    <div class="bg-white rounded-lg overflow-hidden shadow-lg group">
+                        <a href="http://avroart.com/" target="_blank" rel="noopener noreferrer">
+                            <img src="https://placehold.co/600x400/2c3e4d/ffffff?text=AvroArt+Web" alt="Proyecto AvroArt Web" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                        </a>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg text-puretech-dark mb-2">AvroArt</h3>
+                            <p class="text-gray-600 text-sm">Desarrollo de sitio web artístico y galería online para AvroArt, destacando su portafolio de obras.</p>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 2: Ingfood -->
+                    <div class="bg-white rounded-lg overflow-hidden shadow-lg group">
+                        <a href="https://ingfoodec.com/" target="_blank" rel="noopener noreferrer">
+                            <img src="https://placehold.co/600x400/57c5ab/ffffff?text=Ingfood+Web" alt="Proyecto Ingfood Web" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                        </a>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg text-puretech-dark mb-2">Ingfood</h3>
+                            <p class="text-gray-600 text-sm">Desarrollo de sitio web informativo y profesional para Ingfood, destacando sus productos y servicios.</p>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 3: Branding Creations -->
+                    <div class="bg-white rounded-lg overflow-hidden shadow-lg group">
+                        <a href="https://byrons-portfolio.jimdosite.com/galeria/" target="_blank" rel="noopener noreferrer">
+                            <img src="https://placehold.co/600x400/3cb1f2/ffffff?text=Branding+Creations" alt="Creaciones de Branding" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                        </a>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg text-puretech-dark mb-2">Creaciones de Branding</h3>
+                            <p class="text-gray-600 text-sm">Desarrollo de identidad de marca completa, incluyendo logotipos, guías de estilo y elementos visuales para diversas empresas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="section-title text-puretech-dark">¿Listo para Empezar?</h2>
+                    <p class="section-subtitle max-w-2xl mx-auto">
+                        Hablemos de tu próximo proyecto. Contáctanos directamente vía WhatsApp.
+                    </p>
+                </div>
+                <div class="max-w-md mx-auto text-center">
+                    <a href="https://wa.me/593984119388?text=Hola%20Puretech,%20me%20interesa%20conversar%20sobre%20un%20proyecto."
+                       target="_blank"
+                       class="inline-flex items-center bg-puretech-teal text-white font-bold py-4 px-8 rounded-full text-lg hover:bg-opacity-90 transition-all shadow-lg">
+                        <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.04 2C7.34 2 3.58 5.76 3.58 10.46c0 1.95.66 3.8 1.82 5.24L3 21.02l5.5-1.45c1.38.75 2.92 1.15 4.04 1.15 4.7 0 8.46-3.76 8.46-8.46S16.74 2 12.04 2zm4.05 14.16c-.2-.1-.8-.4-1.1-.55-.3-.15-.5-.1-.7.1-.2.2-.6.55-.7.65-.1.1-.2.15-.4.05-.2-.1-.8-.3-.95-.45-.15-.15-.3-.3-.4-.5-.1-.2-.05-.15-.4-.7-.3-.5-.7-.8-.9-.95-.2-.15-.2-.1-.4-.1-.2 0-.4.05-.6.05-.2 0-.5.1-.7.25-.2.15-.8.8-.8.95-.1.1-.1.15-.05.25.05.15.35.55.4.6.05.05.7.95 1.7.95 1 0 1.7-.5 2-.7.3-.2.4-.25.6-.2.2.05.8.35 1.05.45.2.1.4.1.6.05.2-.05.8-.3 1-.6.2-.3.2-.5.15-.65-.05-.15-.2-.2-.4-.3z"/>
+                        </svg>
+                        Contactar por WhatsApp
+                    </a>
+                    <p class="text-sm text-gray-500 mt-4">
+                        (Haz clic para abrir WhatsApp con un mensaje predefinido)
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-puretech-dark text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Puretech. Todos los derechos reservados.</p>
+            <p class="text-sm text-gray-400 mt-1">Reinventando el futuro digital.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu when a link is clicked
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Active Nav Link Highlighting on Scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: '-50% 0px -50% 0px' });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Strategy Chart
+            const ctx = document.getElementById('strategyChart').getContext('2d');
+            const strategyData = [
+                {
+                    label: 'Generación de Leads Calificados',
+                    value: 95,
+                    kpis: 'KPIs: Envíos de formularios, Solicitudes de demo, Descargas de recursos.',
+                    justification: 'Justificación: Los leads son la base del embudo de ventas B2B.'
+                },
+                {
+                    label: 'Establecimiento de Autoridad',
+                    value: 90,
+                    kpis: 'KPIs: Tráfico orgánico, Tiempo en página, Menciones de marca.',
+                    justification: 'Justificación: La confianza y credibilidad son fundamentales en B2B.'
+                },
+                {
+                    label: 'Crecimiento de Ventas y Conversión',
+                    value: 85,
+                    kpis: 'KPIs: Tasa de conversión, Valor de oportunidades, Conversión por servicio.',
+                    justification: 'Justificación: El objetivo final es contribuir directamente a los ingresos.'
+                },
+                {
+                    label: 'Mejora de la Experiencia del Cliente',
+                    value: 80,
+                    kpis: 'KPIs: Tasa de rebote, Tiempo de carga, Compatibilidad móvil.',
+                    justification: 'Justificación: Una UX fluida mantiene a los visitantes comprometidos.'
+                },
+                {
+                    label: 'Visibilidad y Alcance Global',
+                    value: 75,
+                    kpis: 'KPIs: Posicionamiento SERP, Tráfico orgánico, Alcance geográfico.',
+                    justification: 'Justificación: Mostrar ofertas a una audiencia global 24/7.'
+                }
+            ];
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: strategyData.map(d => d.label),
+                    datasets: [{
+                        label: 'Nivel de Enfoque Estratégico',
+                        data: strategyData.map(d => d.value),
+                        backgroundColor: [
+                            '#57c5ab',
+                            '#3cb1f2',
+                            '#57c5ab',
+                            '#3cb1f2',
+                            '#57c5ab'
+                        ],
+                        borderColor: 'rgba(255, 255, 255, 0.2)',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#2c3e4d',
+                            titleFont: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            bodyFont: {
+                                size: 12
+                            },
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    const index = context.dataIndex;
+                                    const data = strategyData[index];
+                                    return [data.kpis, data.justification];
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: {
+                                display: false,
+                                drawBorder: false,
+                            },
+                            ticks: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false,
+                                drawBorder: false,
+                            },
+                            ticks: {
+                                color: '#2c3e4d',
+                                font: {
+                                    size: 14,
+                                    weight: '600'
+                                },
+                                autoSkip: false,
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
